@@ -1,12 +1,31 @@
 
-export async function fetchData(url: string): Promise<any> {
+export interface RequestOptions {
+  headers?: Record<string, string>;
+  authToken?: string;
+}
+
+export async function fetchData(url: string, options?: RequestOptions): Promise<any> {
   try {
     // Add https:// prefix if missing
     if (!/^https?:\/\//i.test(url)) {
       url = 'https://' + url;
     }
     
-    const response = await fetch(url);
+    // Prepare headers
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...(options?.headers || {})
+    };
+    
+    // Add authorization if provided
+    if (options?.authToken) {
+      headers['Authorization'] = `Bearer ${options?.authToken}`;
+    }
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers
+    });
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

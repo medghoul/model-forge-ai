@@ -1,10 +1,9 @@
-
 import { useState } from 'react';
 import UrlInput from '@/components/UrlInput';
 import LanguageSelector from '@/components/LanguageSelector';
 import OptionsPanel, { GenerationOptions } from '@/components/OptionsPanel';
 import CodePreview from '@/components/CodePreview';
-import { fetchData } from '@/utils/fetcher';
+import { fetchData, RequestOptions } from '@/utils/fetcher';
 import { generateTypescriptModel } from '@/utils/modelGenerators/typescript';
 import { generateDartModel } from '@/utils/modelGenerators/dart';
 import { generateKotlinModel } from '@/utils/modelGenerators/kotlin';
@@ -73,10 +72,10 @@ const Index = () => {
     }
   };
 
-  const handleFetch = async (url: string) => {
+  const handleFetch = async (url: string, requestOptions: RequestOptions = {}) => {
     setIsLoading(true);
     try {
-      const data = await fetchData(url);
+      const data = await fetchData(url, requestOptions);
       setJsonData(data);
       generateModel(data);
       toast({
