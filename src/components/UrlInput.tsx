@@ -92,7 +92,7 @@ const UrlInput = ({ onFetch, isLoading }: UrlInputProps) => {
                 className="w-full bg-secondary text-foreground"
               />
               <p className="text-xs text-muted-foreground mt-1">
-                Will be sent as "Authorization: Bearer {token}"
+                Will be sent as "Authorization: Bearer {authToken}"
               </p>
             </div>
             <div>
